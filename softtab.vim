@@ -1,17 +1,17 @@
-" Tabs are superior but spaces have more users.
-" This remaps <Space> and <BS> to treat leading spaces like tabs when navigating in normal mode.
+" Makes Vim navigate leading spaces like tabs.
+" Supports <BS>, <Space>, x, and X in normal mode.
 " Paul Lampert 9/2013
 
-function! SoftTabRight()
+function! SoftTabRight(key,eol)
     if &softtabstop == 0
-        :normal! l
+        execute ":normal! ".a:key
         return
     endif
     let curpos=virtcol(".")-1
     let l=getline(".")
     let llen=len(l)
     if curpos >= llen-1
-        :normal! j0
+        execute ":normal! ".a:eol
         return
     endif
     let countspace=match(l,"[^ ]")
@@ -19,25 +19,25 @@ function! SoftTabRight()
         let countspace=llen-1
     endif
     if curpos >= countspace
-        :normal! l
+        execute ":normal! ".a:key
         return
     endif
     let rtabstop = curpos / &softtabstop * &softtabstop + &softtabstop
     if (rtabstop > countspace)
-        execute ":normal! ".repeat('l',countspace - curpos)
+        execute ":normal! ".repeat(a:key,countspace - curpos)
     else
-        execute ":normal! ".repeat('l',rtabstop - curpos)
+        execute ":normal! ".repeat(a:key,rtabstop - curpos)
     endif
 endfunction
 
-function! SoftTabLeft()
+function! SoftTabLeft(key,eol)
     if &softtabstop == 0
-        :normal! 
+        execute ":normal! ".a:key
         return
     endif
     let curpos=virtcol(".")-1
     if curpos == 0
-        :normal! 
+        execute ":normal! ".a:eol
         return
     endif
     let countspace=match(getline("."),"[^ ]")
@@ -45,16 +45,18 @@ function! SoftTabLeft()
         let countspace=len(getline("."))-1
     endif
     if curpos > countspace
-        :normal! 
+        execute ":normal! ".a:key
         return
     endif
     let nmove=curpos % &softtabstop
     if nmove == 0
-        execute ":normal! ".repeat('',&softtabstop)
+        execute ":normal! ".repeat(a:key,&softtabstop)
     else
-        execute ":normal! ".repeat('',nmove)
+        execute ":normal! ".repeat(a:key,nmove)
     endif
 endfunction
 
-:nmap <silent> <C-H> :call SoftTabLeft()
-:nmap <silent> <Space> :call SoftTabRight()
+:nmap <silent> <C-H>   :call SoftTabLeft("\b","\b")
+:nmap <silent> <Space> :call SoftTabRight("l","j0")
+:nmap <silent> X :call SoftTabLeft("X","X")
+:nmap <silent> x :call SoftTabRight("x","x")
