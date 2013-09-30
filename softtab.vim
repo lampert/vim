@@ -1,4 +1,6 @@
 " Makes Vim navigate leading spaces like tabs.
+" This is only active if softtabstop is set:
+" set softtabstop=4   " Sets the number of columns for a TAB
 " Supports <BS>, <Space>, x, and X in normal mode.
 " Paul Lampert 9/2013
 
