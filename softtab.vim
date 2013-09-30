@@ -2,6 +2,7 @@
 " This is only active if softtabstop is set:
 " set softtabstop=4   " Sets the number of columns for a TAB
 " Supports <BS>, <Space>, x, and X in normal mode.
+" source @ https://github.com/lampert/vim
 " Paul Lampert 9/2013
 
 function! SoftTabRight(key,eol)
