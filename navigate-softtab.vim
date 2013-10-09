@@ -61,5 +61,3 @@ endfunction
 
 :nmap <silent> <C-H>   :call SoftTabLeft("\b","\b")
 :nmap <silent> <Space> :call SoftTabRight("l","j0")
-:nmap <silent> X :call SoftTabLeft("X","X")
-:nmap <silent> x :call SoftTabRight("x","x")
