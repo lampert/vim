@@ -10,7 +10,7 @@ function! SoftTabRight(key,eol)
         execute ":normal! ".a:key
         return
     endif
-    let curpos=virtcol(".")-1
+    let curpos=col(".")-1
     let l=getline(".")
     let llen=len(l)
     if curpos >= llen-1
@@ -38,7 +38,7 @@ function! SoftTabLeft(key,eol)
         execute ":normal! ".a:key
         return
     endif
-    let curpos=virtcol(".")-1
+    let curpos=col(".")-1
     if curpos == 0
         execute ":normal! ".a:eol
         return
